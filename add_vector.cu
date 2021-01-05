@@ -48,8 +48,10 @@ int main()
 		int amountBlock = (n/512) + 1;
 	else
 		int amountBlock = n/512;
+	cudaEventRecord(start);
 	parallel_vector_add<<<amountBlock, 512>>>(d_a, d_b, d_c, d_n);
-	cudaDeviceSynchronize();
+	cudaEventRecord(stop);
+	cudaDeviceSynchronize(stop);
 
 	//Part 3
 	//copy c to host memory
