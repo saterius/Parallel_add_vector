@@ -44,14 +44,15 @@ int main()
 
 	//Part 2
 	//kernel launch code which let the device performs the actual vector addition
+	int amountBlock;
 	if (n % 512)
-		int amountBlock = (n/512) + 1;
+		amountBlock = (n/512) + 1;
 	else
-		int amountBlock = n/512;
+		amountBlock = n/512;
 	cudaEventRecord(start);
 	parallel_vector_add<<<amountBlock, 512>>>(d_a, d_b, d_c, d_n);
 	cudaEventRecord(stop);
-	cudaDeviceSynchronize(stop);
+	cudaDeviceSynchronize();
 
 	//Part 3
 	//copy c to host memory
